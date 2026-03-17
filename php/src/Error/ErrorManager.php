@@ -94,7 +94,7 @@ final class ErrorManager
             return null;
         }
 
-        $eventId = str_replace('-', '', \Ramsey\Uuid\Uuid::uuid4()->toString() ?? bin2hex(random_bytes(16)));
+        $eventId = bin2hex(random_bytes(16));
         $parsed = $this->parseDsn($this->dsn);
 
         $event['event_id']  = $eventId;
@@ -131,7 +131,7 @@ final class ErrorManager
             $frames[] = [
                 'filename' => $frame['file'] ?? 'unknown',
                 'lineno'   => $frame['line'] ?? 0,
-                'function' => $frame['function'] ?? 'unknown',
+                'function' => $frame['function'],
                 'module'   => $frame['class'] ?? null,
             ];
         }

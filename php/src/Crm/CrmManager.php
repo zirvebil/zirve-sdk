@@ -88,7 +88,9 @@ final class CrmManager
 
     private function authenticate(): int
     {
-        if ($this->uid !== null) return $this->uid;
+        if ($this->uid !== null) {
+            return $this->uid;
+        }
 
         $response = $this->http->post('jsonrpc', [
             'json' => [
@@ -115,7 +117,11 @@ final class CrmManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('web/database/list'); return $r->getStatusCode() === 200; }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('web/database/list');
+            return $r->getStatusCode() === 200;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

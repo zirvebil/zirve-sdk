@@ -47,7 +47,11 @@ final class IngressManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('ping'); return $r->getStatusCode() === 200; }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('ping');
+            return $r->getStatusCode() === 200;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

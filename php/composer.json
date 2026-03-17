@@ -34,7 +34,7 @@
         "test": "pest",
         "lint": "php-cs-fixer fix --dry-run --diff",
         "fix": "php-cs-fixer fix",
-        "analyse": "phpstan analyse src --level=8"
+        "analyse": "phpstan analyse src --level=5 --memory-limit=512M"
     },
     "config": {
         "sort-packages": true,

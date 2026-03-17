@@ -38,7 +38,9 @@ final class GatewayManager
     public function addPlugin(string $name, array $config = [], ?string $serviceId = null): array
     {
         $body = ['name' => $name, 'config' => (object) $config];
-        if ($serviceId) $body['service'] = ['id' => $serviceId];
+        if ($serviceId) {
+            $body['service'] = ['id' => $serviceId];
+        }
         $response = $this->http->post('plugins', ['json' => $body]);
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -68,7 +70,11 @@ final class GatewayManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('status'); return $r->getStatusCode() === 200; }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('status');
+            return $r->getStatusCode() === 200;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

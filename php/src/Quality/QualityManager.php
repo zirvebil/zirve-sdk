@@ -56,7 +56,12 @@ final class QualityManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('api/system/status'); $d = json_decode($r->getBody()->getContents(), true); return ($d['status'] ?? '') === 'UP'; }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('api/system/status');
+            $d = json_decode($r->getBody()->getContents(), true);
+            return ($d['status'] ?? '') === 'UP';
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

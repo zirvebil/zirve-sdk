@@ -17,7 +17,7 @@ final class MetricsManager
     private Client $http;
     private string $job;
 
-    /** @var array<string, array{type: string, value: float, help: string, labels: array}> */
+    /** @var array<string, array{type: string, value: float, help: string, labels: array, name: string}> */
     private array $metrics = [];
 
     public function __construct(array $config)

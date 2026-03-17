@@ -46,7 +46,9 @@ final class DeployManager
     public function sync(string $appName, ?string $revision = null): void
     {
         $body = [];
-        if ($revision) $body['revision'] = $revision;
+        if ($revision) {
+            $body['revision'] = $revision;
+        }
         $this->authedRequest('POST', "api/v1/applications/{$appName}/sync", $body);
     }
 
@@ -66,15 +68,21 @@ final class DeployManager
     {
         $headers = ['Authorization' => 'Bearer ' . $this->getToken()];
         $options = ['headers' => $headers];
-        if ($body) $options['json'] = $body;
+        if ($body) {
+            $options['json'] = $body;
+        }
         return $this->http->request($method, $uri, $options);
     }
 
     private function getToken(): string
     {
-        if ($this->token) return $this->token;
+        if ($this->token) {
+            return $this->token;
+        }
         $this->token = $this->config['token'] ?? '';
-        if ($this->token) return $this->token;
+        if ($this->token) {
+            return $this->token;
+        }
 
         $response = $this->http->post('api/v1/session', [
             'json' => ['username' => $this->config['username'] ?? 'admin', 'password' => $this->config['password'] ?? ''],
@@ -87,7 +95,11 @@ final class DeployManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('healthz'); return str_contains($r->getBody()->getContents(), 'ok'); }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('healthz');
+            return str_contains($r->getBody()->getContents(), 'ok');
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

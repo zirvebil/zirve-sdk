@@ -166,7 +166,7 @@ final class StorageManager
         // Basit XML parse
         preg_match_all('/<Key>(.+?)<\/Key>/', $body, $matches);
 
-        return $matches[1] ?? [];
+        return $matches[1];
     }
 
     /**

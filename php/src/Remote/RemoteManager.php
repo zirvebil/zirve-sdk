@@ -74,7 +74,9 @@ final class RemoteManager
 
     private function getToken(): string
     {
-        if ($this->token !== null) return $this->token;
+        if ($this->token !== null) {
+            return $this->token;
+        }
 
         $response = $this->http->post('tokens', [
             'form_params' => [
@@ -91,7 +93,11 @@ final class RemoteManager
 
     public function health(): bool
     {
-        try { $this->getToken(); return true; }
-        catch (\Throwable) { return false; }
+        try {
+            $this->getToken();
+            return true;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

@@ -57,7 +57,7 @@ final class ConfigManager
         'auth.url'          => 'http://keycloak.zirve-services.svc.cluster.local:8080',
         'auth.realm'        => 'zirve',
         'auth.client_id'    => '',
-        'auth.client_secret'=> '',
+        'auth.client_secret' => '',
 
         'secrets.url'       => 'http://infisical-infisical-standalone-infisical.zirve-security.svc.cluster.local:8080',
         'secrets.token'     => '',

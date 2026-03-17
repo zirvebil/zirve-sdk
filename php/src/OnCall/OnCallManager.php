@@ -58,7 +58,11 @@ final class OnCallManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('api/v1/schedules?perpage=1'); return $r->getStatusCode() === 200; }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('api/v1/schedules?perpage=1');
+            return $r->getStatusCode() === 200;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

@@ -15,9 +15,6 @@ final class SearchManager
 {
     private Client $http;
 
-    /** @var array<string, mixed> */
-    private array $config;
-
     public function __construct(array $config)
     {
         $scheme = $config['scheme'] ?? 'https';
@@ -36,7 +33,6 @@ final class SearchManager
             $options['auth'] = [$username, $password];
         }
 
-        $this->config = $config;
         $this->http = new Client($options);
     }
 

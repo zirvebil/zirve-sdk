@@ -51,7 +51,11 @@ final class TestingManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('healthz'); return $r->getStatusCode() === 200; }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('healthz');
+            return $r->getStatusCode() === 200;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

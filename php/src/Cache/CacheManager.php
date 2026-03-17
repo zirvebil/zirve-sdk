@@ -154,12 +154,12 @@ final class CacheManager
     public function unlock(string $key, string $token): bool
     {
         $lua = <<<'LUA'
-            if redis.call("get", KEYS[1]) == ARGV[1] then
-                return redis.call("del", KEYS[1])
-            else
-                return 0
-            end
-        LUA;
+                if redis.call("get", KEYS[1]) == ARGV[1] then
+                    return redis.call("del", KEYS[1])
+                else
+                    return 0
+                end
+            LUA;
 
         return (bool) $this->connection()->eval($lua, ["lock:{$key}", $token], 1);
     }

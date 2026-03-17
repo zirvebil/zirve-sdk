@@ -62,7 +62,11 @@ final class RegistryManager
 
     public function health(): bool
     {
-        try { $r = $this->http->get('api/v2.0/health'); return $r->getStatusCode() === 200; }
-        catch (\Throwable) { return false; }
+        try {
+            $r = $this->http->get('api/v2.0/health');
+            return $r->getStatusCode() === 200;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

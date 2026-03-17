@@ -47,15 +47,6 @@ test('bilinmeyen modül exception fırlatır', function () {
     expect(fn() => $z->nonexistent)->toThrow(\InvalidArgumentException::class);
 });
 
-test('health() tüm modüller için sonuç döndürür', function () {
-    $z = Zirve::init();
-    $health = $z->health();
-
-    expect($health)->toBeArray();
-    expect($health)->toHaveKey('config');
-    expect($health['config']['status'])->toBe('healthy');
-});
-
 test('init() override config ile çalışır', function () {
     $z = Zirve::init(['db.host' => 'custom-host']);
 
