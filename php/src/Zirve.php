@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Zirve;
 
 use Zirve\Config\ConfigManager;
-use Zirve\Db\DbManager;
-use Zirve\Cache\CacheManager;
 
 /**
  * Zirve SDK — Ana giriş noktası.
@@ -14,9 +12,31 @@ use Zirve\Cache\CacheManager;
  * Tüm 26 altyapı servisine tek bir import ile erişim sağlar.
  * Modüller lazy-load edilir: sadece kullanıldığında oluşturulur.
  *
- * @property-read ConfigManager  $config  Service discovery + env yönetimi
- * @property-read DbManager     $db      PostgreSQL + MariaDB
- * @property-read CacheManager  $cache   Redis
+ * @property-read Config\ConfigManager       $config     Service discovery + env
+ * @property-read Db\DbManager              $db         PostgreSQL + MariaDB
+ * @property-read Cache\CacheManager         $cache      Redis
+ * @property-read Auth\AuthManager           $auth       Keycloak
+ * @property-read Secrets\SecretsManager     $secrets    Infisical
+ * @property-read Queue\QueueManager         $queue      RabbitMQ
+ * @property-read Storage\StorageManager     $storage    MinIO + Imgproxy
+ * @property-read Search\SearchManager       $search     Elasticsearch
+ * @property-read Analytics\AnalyticsManager $analytics  ClickHouse
+ * @property-read Log\LogManager             $log        Loki
+ * @property-read Error\ErrorManager         $error      Sentry
+ * @property-read Trace\TraceManager         $trace      OTel + Tempo
+ * @property-read Metrics\MetricsManager     $metrics    Prometheus
+ * @property-read Billing\BillingManager     $billing    Lago
+ * @property-read Crm\CrmManager             $crm        Odoo
+ * @property-read Remote\RemoteManager       $remote     Guacamole
+ * @property-read Gateway\GatewayManager     $gateway    Kong
+ * @property-read Ingress\IngressManager     $ingress    Traefik
+ * @property-read Registry\RegistryManager   $registry   Harbor
+ * @property-read Deploy\DeployManager       $deploy     ArgoCD
+ * @property-read Cluster\ClusterManager     $cluster    Rancher
+ * @property-read Quality\QualityManager     $quality    SonarQube
+ * @property-read OnCall\OnCallManager       $oncall     Grafana OnCall
+ * @property-read Dashboard\DashboardManager $dashboard  Grafana
+ * @property-read Testing\TestingManager     $testing    Keploy
  */
 final class Zirve
 {
@@ -29,36 +49,36 @@ final class Zirve
 
     /** Module class map: property name → [class, config-prefix] */
     private const MODULE_MAP = [
-        'config'    => [ConfigManager::class, 'config'],
-        'db'        => [DbManager::class, 'db'],
-        'cache'     => [CacheManager::class, 'cache'],
-        // Sprint 2
-        // 'auth'      => [Auth\AuthManager::class, 'auth'],
-        // 'secrets'   => [Secrets\SecretsManager::class, 'secrets'],
-        // 'queue'     => [Queue\QueueManager::class, 'queue'],
-        // Sprint 3
-        // 'storage'   => [Storage\StorageManager::class, 'storage'],
-        // 'search'    => [Search\SearchManager::class, 'search'],
-        // 'analytics' => [Analytics\AnalyticsManager::class, 'analytics'],
-        // Sprint 4
-        // 'log'       => [Log\LogManager::class, 'log'],
-        // 'error'     => [Error\ErrorManager::class, 'error'],
-        // 'trace'     => [Trace\TraceManager::class, 'trace'],
-        // 'metrics'   => [Metrics\MetricsManager::class, 'metrics'],
-        // Sprint 5
-        // 'billing'   => [Billing\BillingManager::class, 'billing'],
-        // 'crm'       => [Crm\CrmManager::class, 'crm'],
-        // 'remote'    => [Remote\RemoteManager::class, 'remote'],
-        // Sprint 6
-        // 'gateway'   => [Gateway\GatewayManager::class, 'gateway'],
-        // 'ingress'   => [Ingress\IngressManager::class, 'ingress'],
-        // 'registry'  => [Registry\RegistryManager::class, 'registry'],
-        // 'deploy'    => [Deploy\DeployManager::class, 'deploy'],
-        // 'cluster'   => [Cluster\ClusterManager::class, 'cluster'],
-        // 'quality'   => [Quality\QualityManager::class, 'quality'],
-        // 'oncall'    => [OnCall\OnCallManager::class, 'oncall'],
-        // 'dashboard' => [Dashboard\DashboardManager::class, 'dashboard'],
-        // 'testing'   => [Testing\TestingManager::class, 'testing'],
+        // Tier 1 — Data
+        'config'    => [Config\ConfigManager::class, 'config'],
+        'db'        => [Db\DbManager::class, 'db'],
+        'cache'     => [Cache\CacheManager::class, 'cache'],
+        'search'    => [Search\SearchManager::class, 'search'],
+        'storage'   => [Storage\StorageManager::class, 'storage'],
+        'analytics' => [Analytics\AnalyticsManager::class, 'analytics'],
+        // Tier 2 — Security & Communication
+        'auth'      => [Auth\AuthManager::class, 'auth'],
+        'secrets'   => [Secrets\SecretsManager::class, 'secrets'],
+        'queue'     => [Queue\QueueManager::class, 'queue'],
+        // Tier 3 — Observability
+        'log'       => [Log\LogManager::class, 'log'],
+        'error'     => [Error\ErrorManager::class, 'error'],
+        'trace'     => [Trace\TraceManager::class, 'trace'],
+        'metrics'   => [Metrics\MetricsManager::class, 'metrics'],
+        // Tier 4 — Business
+        'billing'   => [Billing\BillingManager::class, 'billing'],
+        'crm'       => [Crm\CrmManager::class, 'crm'],
+        'remote'    => [Remote\RemoteManager::class, 'remote'],
+        // Tier 5 — Platform & DevOps
+        'gateway'   => [Gateway\GatewayManager::class, 'gateway'],
+        'ingress'   => [Ingress\IngressManager::class, 'ingress'],
+        'registry'  => [Registry\RegistryManager::class, 'registry'],
+        'deploy'    => [Deploy\DeployManager::class, 'deploy'],
+        'cluster'   => [Cluster\ClusterManager::class, 'cluster'],
+        'quality'   => [Quality\QualityManager::class, 'quality'],
+        'oncall'    => [OnCall\OnCallManager::class, 'oncall'],
+        'dashboard' => [Dashboard\DashboardManager::class, 'dashboard'],
+        'testing'   => [Testing\TestingManager::class, 'testing'],
     ];
 
     private function __construct(ConfigManager $configManager)
