@@ -1,0 +1,46 @@
+{
+    "name": "zirvebil/zirve-sdk",
+    "description": "Zirve Bilgisayar Infrastructure SDK — 25 modules for 26 services",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zirve Bilgisayar",
+            "email": "dev@zirvebilgisayar.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "guzzlehttp/guzzle": "^7.9",
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.0",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^2.0",
+        "mockery/mockery": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zirve\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zirve\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "lint": "php-cs-fixer fix --dry-run --diff",
+        "fix": "php-cs-fixer fix",
+        "analyse": "phpstan analyse src --level=8"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable"
+}
